@@ -13,6 +13,7 @@ desktop.ini
 *.crx
 dist/
 build/
+node_modules/
 
 # Editor Settings
 .vscode/

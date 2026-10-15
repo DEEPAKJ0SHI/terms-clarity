@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TermsClarity - AI Terms & Privacy Explainer</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+        <span class="brand-name">TermsClarity</span>
+        <span class="cloud-badge">Cloud Run Live</span>
+      </div>
+      <div class="nav-links">
+        <a href="#analyzer" class="nav-link">Live Analyzer</a>
+        <a href="#extension" class="nav-link">Chrome Extension</a>
+        <a href="/download/extension.zip" class="btn-download-nav">Download Extension (.zip)</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="hero-pill">⚡ Powered by Google Cloud Run & Gemini AI</div>
+      <h1>Know what you're agreeing to,<br><span class="gradient-text">before you click "Agree".</span></h1>
+      <p class="hero-desc">
+        Terms & Conditions and Privacy Policies are deliberately written in dense legal jargon. TermsClarity translates them into plain English, spots dangerous red flags, and breaks down exactly what happens to your personal data.
+      </p>
+      <div class="hero-buttons">
+        <a href="#analyzer" class="btn-primary">Try Web Analyzer Live</a>
+        <a href="/download/extension.zip" class="btn-secondary">Download Chrome Extension (.zip)</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Web Analyzer Section -->
+  <section id="analyzer" class="analyzer-section">
+    <div class="section-header">
+      <h2>Live Policy Analyzer</h2>
+      <p>Paste any Terms of Service, Privacy Policy, or EULA to analyze it instantly.</p>
+    </div>
+
+    <div class="analyzer-card">
+      <div class="analyzer-toolbar">
+        <button id="btn-sample-subscription" class="pill-btn">Load Sample SaaS Terms</button>
+        <button id="btn-sample-privacy" class="pill-btn">Load Sample Privacy Policy</button>
+        <button id="btn-clear" class="pill-btn text-muted">Clear</button>
+      </div>
+
+      <textarea id="policy-input" placeholder="Paste Terms of Service or Privacy Policy text here..."></textarea>
+
+      <div class="analyzer-footer">
+        <div class="char-count" id="char-count">0 characters</div>
+        <button id="btn-analyze" class="btn-analyze">
+          <span class="btn-spinner hidden" id="spinner"></span>
+          <span id="btn-analyze-text">⚡ Analyze Policy</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Results Display -->
+    <div id="results-container" class="results-container hidden">
+      <!-- Top Verdict Card -->
+      <div class="verdict-banner">
+        <div class="verdict-top">
+          <span class="policy-type" id="res-policy-type">Terms of Service</span>
+          <span class="risk-pill high-risk" id="res-risk-pill">🔴 High Risk</span>
+        </div>
+        <div class="flag-counter">
+          <span class="flag-icon">🚩</span>
+          <span id="res-red-flags-count">3 Red Flags Detected</span>
+        </div>
+        <div class="summary-box">
+          <h3>The Plain-English Bottom Line</h3>
+          <p id="res-overall-summary"></p>
+          <div class="bottom-line-callout" id="res-bottom-line"></div>
+        </div>
+      </div>
+
+      <!-- 3 to 5 Key Findings -->
+      <div class="findings-section">
+        <h3>Key Findings & Real-World Consequences</h3>
+        <p class="section-sub">3 to 5 critical clauses you should know about, backed by verbatim quotes.</p>
+        <div class="findings-grid" id="findings-grid"></div>
+      </div>
+
+      <!-- Categories Breakdown -->
+      <div class="categories-section">
+        <h3>Category Breakdown</h3>
+        <div class="categories-grid">
+          <!-- Privacy -->
+          <div class="cat-card">
+            <div class="cat-card-header">
+              <span class="cat-emoji">🛡️</span>
+              <div>
+                <h4>What Happens to My Data?</h4>
+                <p id="cat-privacy-head" class="cat-sub"></p>
+              </div>
+            </div>
+            <ul id="cat-privacy-list" class="cat-list"></ul>
+          </div>
+
+          <!-- Payments -->
+          <div class="cat-card">
+            <div class="cat-card-header">
+              <span class="cat-emoji">💳</span>
+              <div>
+                <h4>Payments & Auto-Renewals</h4>
+                <p id="cat-payments-head" class="cat-sub"></p>
+              </div>
+            </div>
+            <ul id="cat-payments-list" class="cat-list"></ul>
+          </div>
+
+          <!-- Cancellation -->
+          <div class="cat-card">
+            <div class="cat-card-header">
+              <span class="cat-emoji">❌</span>
+              <div>
+                <h4>Cancellation & Termination</h4>
+                <p id="cat-cancellation-head" class="cat-sub"></p>
+              </div>
+            </div>
+            <ul id="cat-cancellation-list" class="cat-list"></ul>
+          </div>
+
+          <!-- Liability -->
+          <div class="cat-card">
+            <div class="cat-card-header">
+              <span class="cat-emoji">⚖️</span>
+              <div>
+                <h4>Liability & Dispute Rights</h4>
+                <p id="cat-liability-head" class="cat-sub"></p>
+              </div>
+            </div>
+            <ul id="cat-liability-list" class="cat-list"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chrome Extension Section -->
+  <section id="extension" class="extension-section">
+    <div class="extension-container">
+      <div class="ext-text">
+        <h2>Take TermsClarity with you on every website</h2>
+        <p>The Chrome Extension works automatically on any webpage you visit. With one click, it extracts visible terms, highlights dangerous clauses in golden glow right on the page, and protects your rights.</p>
+        <div class="ext-steps">
+          <div class="step-item">
+            <span class="step-num">1</span>
+            <span>Download the <a href="/download/extension.zip">terms-clarity-v1.0.0.zip</a> archive.</span>
+          </div>
+          <div class="step-item">
+            <span class="step-num">2</span>
+            <span>Open <code>chrome://extensions/</code> in Chrome and enable <strong>Developer mode</strong>.</span>
+          </div>
+          <div class="step-item">
+            <span class="step-num">3</span>
+            <span>Click <strong>Load unpacked</strong> and select the unzipped extension directory!</span>
+          </div>
+        </div>
+        <a href="/download/extension.zip" class="btn-primary btn-large">Download Extension Package (.zip)</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <p>© 2026 TermsClarity • Deployed on Google Cloud Run</p>
+      <div class="health-indicator">
+        <span class="pulse-dot"></span> Cloud Run Service: Online
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
